@@ -1,0 +1,48 @@
+{
+  "series": [
+    {
+      "id": 1,
+      "name": "How I met your mother 2",
+      "status": "watched",
+      "genre": "Comédia",
+      "comments": "Muito bom"
+    },
+    {
+      "id": 2,
+      "name": "Friends",
+      "status": "watching",
+      "genre": "Comédia",
+      "current": {
+        "episode": "01",
+        "season": "09"
+      },
+      "comments": "Bom para descontrair"
+    },
+    {
+      "name": "Teste",
+      "status": "watched",
+      "genre": "Comédia",
+      "comments": "Teste",
+      "id": 5
+    },
+    {
+      "name": "Velozes e Furiosos",
+      "status": "watching",
+      "genre": "Ação",
+      "comments": "Melhor filme do mundo",
+      "id": 6
+    },
+    {
+      "name": "Star Wars",
+      "status": "toWatch",
+      "genre": "Ação",
+      "comments": "Uma bosta!",
+      "id": 7
+    }
+  ],
+  "genres": [
+    "Comédia",
+    "Drama",
+    "Ação"
+  ]
+}
