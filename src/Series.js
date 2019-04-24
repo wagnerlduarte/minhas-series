@@ -61,7 +61,7 @@ class Series extends Component {
 
     loadData() {
         this.setState({ isLoading: true })
-        setInterval(() => {
+        setTimeout(() => {
             api.loadSeriesByGenre(this.props.match.params.genre).then((response) => {
                 this.setState({
                     isLoading: false,

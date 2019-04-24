@@ -1,16 +1,18 @@
 import axios from 'axios';
 
-const api = axios.create({
-    baseURL: 'http://localhost:3001/'
-});
+// const api = axios.create({
+//     baseURL: 'http://localhost:3001/'
+// });
+
+axios.defaults.baseURL = 'http://localhost:3001/';
 
 const apis = {
-    loadGenres: () => api.get('genres'),
-    loadSeriesByGenre: (genreName) => api.get(`series?genre=${genreName}`),
-    loadSeries: (id) => api.get(`series/${id}`),
-    deleteSeries: (id) => api.delete(`series/${id}`),
-    saveSeries: (newSerie) => api.post('series', newSerie),
-    editSeries: (editedSerie) => api.put(`series/${editedSerie.id}`, editedSerie),
+    loadGenres: () => axios.get('genres'),
+    loadSeriesByGenre: (genreName) => axios.get(`series?genre=${genreName}`),
+    loadSeries: (id) => axios.get(`series/${id}`),
+    deleteSeries: (id) => axios.delete(`series/${id}`),
+    saveSeries: (newSerie) => axios.post('series', newSerie),
+    editSeries: (editedSerie) => axios.put(`series/${editedSerie.id}`, editedSerie),
 }
 
 export default apis;
