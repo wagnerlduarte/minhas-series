@@ -51,7 +51,7 @@ class App extends Component {
                                     <Link to="/">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/new">New Series</Link>
+                                    <Link to="/serie">Nova Série</Link>
                                 </li>
                                 <li>
                                     <Link to="/about">Sobre</Link>
@@ -60,13 +60,13 @@ class App extends Component {
                         </div>
                     </div>
                 </nav>
-                <section>
+                <section className="container">
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route path="/series/edit/:id" component={EditSeries} />
+                        <Route path="/serie/:id" component={NewSeries} />
+                        <Route path="/serie" component={NewSeries} />
                         <Route path="/series/:genre" component={Series} />
                         <Route path="/about" component={About} />
-                        <Route path="/new" component={NewSeries} />
                         <Redirect to="/" />
                     </Switch>
                 </section>

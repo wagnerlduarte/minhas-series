@@ -16,17 +16,30 @@ class NewSeries extends Component {
 
         this.state = {
             genres: [],
-            isLoading: false,
+            isEdit: !!this.props.match.params.id,
             redirect: false
         }
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true })
+
+        if (this.state.isEdit) {
+            api.loadSeries(this.props.match.params.id).then((response) => {
+                const serie = response.data;
+
+                this.setState({
+                    serie: serie
+                })
+
+                this.refs.name.value = serie.name;
+                this.refs.genre.value = serie.genre;
+                this.refs.status.value = serie.status;
+                this.refs.comments.value = serie.comments;
+            })
+        }
 
         api.loadGenres().then((response) => {
             this.setState({
-                isLoading: false,
                 genres: response.data
             })
         })
@@ -42,41 +55,60 @@ class NewSeries extends Component {
         const refs = this.refs;
 
         const newSerie = {
+            id: this.props.match.params.id,
             name: refs.name.value,
             status: refs.status.value,
             genre: refs.genre.value,
             comments: refs.comments.value
         }
 
-        api.saveSeries(newSerie)
-            .then((response) => {
-                this.setState({
-                    redirect: `/series/${refs.genre.value}`
-                })
-            });
+        if (this.state.isEdit) {
+            api.editSeries(newSerie)
+                .then(() => {
+                    this.setState({
+                        redirect: `/series/${refs.genre.value}`
+                    })
+                });
+        } else {
+            api.saveSeries(newSerie)
+                .then(() => {
+                    this.setState({
+                        redirect: `/series/${refs.genre.value}`
+                    })
+                });
+        }
     }
 
     render() {
         return (
-
             < section className="intro-section" >
                 {
                     this.state.redirect &&
                     <Redirect to={this.state.redirect} />
                 }
-                <h1>Nova série</h1>
+                <h1> {this.state.isEdit ? 'Editar' : 'Nova'} série</h1>
                 <form>
-                    Nome: <input type="text" ref="name" className="form-control" /><br />
-                    Status:
-                    <select ref="status">
-                        {Object.keys(statuses).map(key => this.renderOption(key, statuses[key]))}
-                    </select><br />
-                    Genero:
-                    <select ref="genre">
-                        {this.state.genres.map(genre => this.renderOption(genre, genre))}
-                    </select><br />
-                    Comentários: <textarea ref="comments" className="form-control" ></textarea><br />
-                    <button type="button" onClick={() => this.saveSeries()}>Salvar</button>
+                    <div className="form-group">
+                        <label>Nome:</label>
+                        <input type="text" ref="name" className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <label>Status:</label>
+                        <select ref="status" className="form-control">
+                            {Object.keys(statuses).map(key => this.renderOption(key, statuses[key]))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Genero:</label>
+                        <select ref="genre" className="form-control">
+                            {this.state.genres.map(genre => this.renderOption(genre, genre))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Comentários:</label>
+                        <textarea ref="comments" className="form-control" ></textarea>
+                    </div>
+                    <button type="button" className="btn btn-default" onClick={() => this.saveSeries()}>Salvar</button>
                 </form>
             </section >
         );
