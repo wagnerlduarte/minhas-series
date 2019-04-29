@@ -33,11 +33,11 @@
       "id": 6
     },
     {
-      "name": "Star Wars",
+      "id": 7,
+      "name": "Star Wars 2",
       "status": "toWatch",
       "genre": "Ação",
-      "comments": "Uma bosta!",
-      "id": 7
+      "comments": "Uma bosta!"
     }
   ],
   "genres": [

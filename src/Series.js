@@ -46,7 +46,7 @@ class Series extends Component {
                             </div>
                             <div className="col-xs-12 col-md-6">
                                 <Link className="btn btn-success" to={`/serie/${serie.id}`}>Editar</Link>
-                                <a className="btn btn-success" onClick={() => this.deleteSeries(serie.id)}>Excluir</a>
+                                <button type="button" className="btn btn-success" onClick={() => this.deleteSeries(serie.id)}>Excluir</button>
                             </div>
                         </div>
                     </div>

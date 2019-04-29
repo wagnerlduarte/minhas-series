@@ -9,8 +9,7 @@ const statuses = {
     toWatch: 'Assistir'
 }
 
-class NewSeries extends Component {
-
+class Serie extends Component {
     constructor(props) {
         super(props);
 
@@ -22,7 +21,6 @@ class NewSeries extends Component {
     }
 
     componentDidMount() {
-
         if (this.state.isEdit) {
             api.loadSeries(this.props.match.params.id).then((response) => {
                 const serie = response.data;
@@ -54,7 +52,7 @@ class NewSeries extends Component {
     saveSeries() {
         const refs = this.refs;
 
-        const newSerie = {
+        const serie = {
             id: this.props.match.params.id,
             name: refs.name.value,
             status: refs.status.value,
@@ -63,14 +61,14 @@ class NewSeries extends Component {
         }
 
         if (this.state.isEdit) {
-            api.editSeries(newSerie)
+            api.editSeries(serie)
                 .then(() => {
                     this.setState({
                         redirect: `/series/${refs.genre.value}`
                     })
                 });
         } else {
-            api.saveSeries(newSerie)
+            api.saveSeries(serie)
                 .then(() => {
                     this.setState({
                         redirect: `/series/${refs.genre.value}`
@@ -115,4 +113,4 @@ class NewSeries extends Component {
     }
 }
 
-export default NewSeries;
+export default Serie;

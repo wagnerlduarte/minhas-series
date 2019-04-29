@@ -5,14 +5,9 @@ import Interceptor from './Interceptor';
 import { Loader } from './loader/loader.component';
 
 import Home from './Home';
-import NewSeries from './NewSeries';
-import EditSeries from './EditSeries';
+import Serie from './Serie';
 import About from './About';
 import Series from './Series';
-
-//stateless component
-// const About = () => <section className="intro-section"><h1>Sobre</h1></section>
-
 
 class App extends Component {
 
@@ -62,18 +57,17 @@ class App extends Component {
                 </nav>
                 <section className="container">
                     <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/serie/:id" component={NewSeries} />
-                        <Route path="/serie" component={NewSeries} />
-                        <Route path="/series/:genre" component={Series} />
-                        <Route path="/about" component={About} />
+                        <Route path="/" component={Home} exact />
+                        <Route path="/serie" render={(props) => <Serie {...props} />} exact />
+                        <Route path="/serie/:id" render={(props) => <Serie key={props.match.params.id} {...props} />} exact />
+                        <Route path="/series/:genre" component={Series} exact />
+                        <Route path="/about" component={About} exact />
                         <Redirect to="/" />
                     </Switch>
                 </section>
                 {this.state.loading &&
                     <Loader />
                 }
-
             </div>
         )
     }
