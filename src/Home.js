@@ -9,17 +9,13 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            genres: [],
-            isLoading: false
+            genres: []
         }
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true })
-
         api.loadGenres().then((response) => {
             this.setState({
-                isLoading: false,
                 genres: response.data
             })
         })
@@ -46,10 +42,6 @@ class Home extends Component {
                 </section>
                 <section>
                     {
-                        this.state.isLoading &&
-                        <span>Aguarde, carregando...</span>
-                    }
-                    {!this.state.isLoading &&
                         <div>
                             Ver séries do gênero:
                             {this.state.genres.map(this.renderGenreLink)}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap'
 
 import api from './Api';
 
@@ -16,22 +17,27 @@ class Series extends Component {
 
         this.state = {
             series: [],
-            isLoading: false
+            modalShow: true,
+            oi: 'tico'
         }
 
         this.loadData = this.loadData.bind(this)
         this.renderSeries = this.renderSeries.bind(this)
+        this.deleteSeries = this.deleteSeries.bind(this)
     }
 
     deleteSeries(id) {
-        api.deleteSeries(id).then(() => {
-            this.loadData()
-        })
+
+        this.setState({ modalShow: true })
+
+        // api.deleteSeries(id).then(() => {
+        //     this.loadData()
+        // })
     }
 
     renderSeries(serie) {
         return (
-            <div key={serie.id} className="item  col-xs-4 col-lg-4">
+            <div key={serie.id} className="item col-xs-4 col-lg-4">
                 <div className="thumbnail">
                     <img className="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
                     <div className="caption">
@@ -60,33 +66,46 @@ class Series extends Component {
     }
 
     loadData() {
-        this.setState({ isLoading: true })
         setTimeout(() => {
             api.loadSeriesByGenre(this.props.match.params.genre).then((response) => {
                 this.setState({
-                    isLoading: false,
                     series: response.data
                 })
             })
         }, 1500)
     }
 
-    render() {
-        return (
-            <section id="intro" className="intro-section">
-                <h1>Series {this.props.match.params.genre}</h1>
 
-                <div id="series" className="row list-group">
-                    {
-                        this.state.isLoading &&
-                        <span>Aguarde, carregando...</span>
-                    }
-                    {!this.state.isLoading &&
-                        this.state.series.map((serie) => this.renderSeries(serie))}
-                    {!this.state.isLoading && !this.state.series.length &&
-                        <div className="alert alert-info">Nenhuma série cadastrada</div>}
-                </div>
-            </section>
+    render() {
+        let modalClose = () => this.setState({ modalShow: false })
+
+        return (
+            <>
+                <section id="intro" className="intro-section">
+                    <h1>Series {this.props.match.params.genre}</h1>
+
+                    <div id="series" className="row list-group">
+                        {this.state.series.map((serie) => this.renderSeries(serie))}
+                        {!this.state.series.length &&
+                            <div className="alert alert-info">Nenhuma série cadastrada</div>}
+                    </div>
+                    teste: {this.state.oi}
+                </section>
+                <Modal show={this.state.modalShow} onHide={modalClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal title</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>Modal body text goes here.</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.modalClose}>Close</Button>
+                        <Button variant="primary" onClick={this.modalClose}>Save changes</Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
         );
     }
 }
