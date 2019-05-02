@@ -33,26 +33,22 @@ class App extends Component {
 
         return (
             <div>
-                <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
-                    <div className="container">
-                        <div className="navbar-header page-scroll">
-                            <a className="navbar-brand page-scroll" href="#page-top">
-                                <img src="/images/logo.png" alt="logo" height="30" />
-                            </a>
-                        </div>
-                        <div className="collapse navbar-collapse navbar-ex1-collapse">
-                            <ul className="nav navbar-nav">
-                                <li>
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/serie">Nova Série</Link>
-                                </li>
-                                <li>
-                                    <Link to="/about">Sobre</Link>
-                                </li>
-                            </ul>
-                        </div>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
+                    <div className="collapse navbar-collapse">
+                        <a className="navbar-brand">
+                            <img src="/images/logo.png" alt="logo" height="30" />
+                        </a>
+                        <ul className="nav navbar-nav">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/">Home</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/serie">Nova Série</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/about">Sobre</Link>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
                 <section className="container">

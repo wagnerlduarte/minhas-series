@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap'
 
 import api from './Api';
 
-const statuses = {
-    watched: 'Assistido',
-    watching: 'Assistindo',
-    toWatch: 'Assistir'
-}
+import SerieThumbnail from './SerieThumbnail';
 
 class Series extends Component {
 
@@ -17,8 +12,7 @@ class Series extends Component {
 
         this.state = {
             series: [],
-            modalShow: true,
-            oi: 'tico'
+            modalShow: false
         }
 
         this.loadData = this.loadData.bind(this)
@@ -37,27 +31,9 @@ class Series extends Component {
 
     renderSeries(serie) {
         return (
-            <div key={serie.id} className="item col-xs-4 col-lg-4">
-                <div className="thumbnail">
-                    <img className="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
-                    <div className="caption">
-                        <h4 className="group inner list-group-item-heading">
-                            {serie.name}
-                        </h4>
-                        <div className="row">
-                            <div className="col-xs-12 col-md-6">
-                                <p className="lead">
-                                    {serie.genre} / {statuses[serie.status]}
-                                </p>
-                            </div>
-                            <div className="col-xs-12 col-md-6">
-                                <Link className="btn btn-success" to={`/serie/${serie.id}`}>Editar</Link>
-                                <button type="button" className="btn btn-success" onClick={() => this.deleteSeries(serie.id)}>Excluir</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <>
+                <SerieThumbnail serie={serie} showButtons={false} />
+            </>
         )
     }
 
@@ -75,7 +51,6 @@ class Series extends Component {
         }, 1500)
     }
 
-
     render() {
         let modalClose = () => this.setState({ modalShow: false })
 
@@ -84,12 +59,13 @@ class Series extends Component {
                 <section id="intro" className="intro-section">
                     <h1>Series {this.props.match.params.genre}</h1>
 
-                    <div id="series" className="row list-group">
-                        {this.state.series.map((serie) => this.renderSeries(serie))}
-                        {!this.state.series.length &&
-                            <div className="alert alert-info">Nenhuma série cadastrada</div>}
+                    <div id="series" className="row">
+                        {this.state.series.length > 0 &&
+                            this.state.series.map((serie) => this.renderSeries(serie))}
                     </div>
-                    teste: {this.state.oi}
+
+                    {!this.state.series.length &&
+                        <div className="alert alert-primary">Nenhuma série cadastrada</div>}
                 </section>
                 <Modal show={this.state.modalShow} onHide={modalClose}>
                     <Modal.Header closeButton>
@@ -101,8 +77,8 @@ class Series extends Component {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.modalClose}>Close</Button>
-                        <Button variant="primary" onClick={this.modalClose}>Save changes</Button>
+                        <Button variant="secondary" onClick={modalClose}>Close</Button>
+                        <Button variant="primary" onClick={modalClose}>Save changes</Button>
                     </Modal.Footer>
                 </Modal>
             </>
