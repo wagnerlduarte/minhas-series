@@ -13,7 +13,8 @@ class Home extends Component {
 
         this.state = {
             genres: [],
-            series: {}
+            series: {},
+            selectedGenre: undefined
         }
 
         this.renderPaneContent = this.renderPaneContent.bind(this);
@@ -38,18 +39,29 @@ class Home extends Component {
     renderPaneContent(genre) {
         return (
             <Tab.Pane onEnter={() => this.onSelectTab(genre)} key={genre} eventKey={`#${genre}`}>
-                {this.state.series[genre] && this.state.series[genre].length > 0 &&
-                    this.state.series[genre].map((serie) => {
-                        return <SerieThumbnail serie={serie} showButtons={false}></SerieThumbnail>
-                    })
+                <Row>
+                    {this.state.series[genre] && this.state.series[genre].length > 0 &&
+                        this.state.series[genre].map((serie, index) => {
+                            return <SerieThumbnail key={index} serie={serie} showButtons={false}></SerieThumbnail>
+                        })
+                    }
+                </Row>
+                {
+                    this.state.series[genre] && this.state.series[genre].length === 0 &&
+                    <div className="alert alert-primary">Nenhuma série cadastrada</div>
                 }
             </Tab.Pane>
         )
     }
 
-    onSelectTab(genre)
-    {
-        api.loadSeriesByGenre(genre).then((response) => {
+    onSelectTab(genre) {
+        const limitResult = 3
+
+        this.setState({
+            selectedGenre: genre
+        })
+
+        api.loadSeriesByGenre(genre, limitResult).then((response) => {
             const series = this.state.series;
 
             series[genre] = response.data;
@@ -80,7 +92,7 @@ class Home extends Component {
 
                             {this.state.genres.length > 0 &&
                                 <Tab.Container id="list-group-tabs-example">
-                                {/* defaultActiveKey={`#${this.state.genres[0]}`} */}
+                                    {/* defaultActiveKey={`#${this.state.genres[0]}`} */}
                                     <Row>
                                         <Col sm={4}>
                                             <ListGroup>
@@ -90,6 +102,9 @@ class Home extends Component {
                                         <Col sm={8}>
                                             <Tab.Content>
                                                 {this.state.genres.map(this.renderPaneContent)}
+                                                {this.state.selectedGenre &&
+                                                    <Link className="float-right" to={`series/${this.state.selectedGenre}`}>Ver mais...</Link>
+                                                }
                                             </Tab.Content>
                                         </Col>
                                     </Row>

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap'
+import { toast } from 'react-toastify';
+
+import api from './Api';
 
 const statuses = {
     watched: 'Assistido',
@@ -12,6 +16,34 @@ class SerieThumbnail extends Component {
 
     constructor(props) {
         super(props)
+
+        this.state = {
+            modalShow: false,
+            toastOptions: {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            }
+        }
+    }
+
+    modalClose() {
+        this.setState({ modalShow: false })
+    }
+
+    modalOpen(serieId) {
+        this.setState({ modalShow: true, idSerieToDelete: serieId })
+    }
+
+    deleteSerie(id) {
+        api.deleteSeries(id).then(() => {
+            this.modalClose()
+            toast.success('Série excluida com sucesso!', this.state.toastOptions)
+            this.props.loadData()
+        })
     }
 
     render() {
@@ -27,19 +59,34 @@ class SerieThumbnail extends Component {
                             <div className="row">
                                 <div className="col-xs-12 col-md-6">
                                     <p className="lead">
-                                        {this.props.serie.genre} / {statuses[this.props.serie.status]}
+                                        {statuses[this.props.serie.status]}
                                     </p>
                                 </div>
                                 {this.props.showButtons &&
                                     <div className="col-xs-12 col-md-6">
                                         <Link className="btn btn-success" to={`/serie/${this.props.serie.id}`}>Editar</Link>
-                                        <button type="button" className="btn btn-success" onClick={() => this.deleteSeries(this.props.serie.id)}>Excluir</button>
+                                        <button type="button" className="btn btn-success" onClick={() => this.modalOpen(this.props.serie.id)}>Excluir</button>
                                     </div>
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <Modal show={this.state.modalShow} onHide={this.modalClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal title</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <p>Modal body text goes here.</p>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.modalClose()}>Close</Button>
+                        <Button variant="primary" onClick={() => { this.deleteSerie(this.state.idSerieToDelete) }}>Save changes</Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }

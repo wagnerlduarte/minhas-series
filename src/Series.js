@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 
 import api from './Api';
 
@@ -12,28 +12,16 @@ class Series extends Component {
 
         this.state = {
             series: [],
-            modalShow: false
+            loadedSeries: false
         }
 
         this.loadData = this.loadData.bind(this)
         this.renderSeries = this.renderSeries.bind(this)
-        this.deleteSeries = this.deleteSeries.bind(this)
-    }
-
-    deleteSeries(id) {
-
-        this.setState({ modalShow: true })
-
-        // api.deleteSeries(id).then(() => {
-        //     this.loadData()
-        // })
     }
 
     renderSeries(serie) {
         return (
-            <>
-                <SerieThumbnail serie={serie} showButtons={false} />
-            </>
+            <SerieThumbnail key={serie.id} serie={serie} showButtons={true} loadData={this.loadData} />
         )
     }
 
@@ -42,45 +30,32 @@ class Series extends Component {
     }
 
     loadData() {
-        setTimeout(() => {
-            api.loadSeriesByGenre(this.props.match.params.genre).then((response) => {
-                this.setState({
-                    series: response.data
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                api.loadSeriesByGenre(this.props.match.params.genre).then((response) => {
+                    this.setState({
+                        series: response.data,
+                        loadedSeries: true
+                    })
+                    resolve()
                 })
-            })
-        }, 1500)
+
+            }, 1500)
+        })
     }
 
     render() {
-        let modalClose = () => this.setState({ modalShow: false })
-
         return (
             <>
                 <section id="intro" className="intro-section">
                     <h1>Series {this.props.match.params.genre}</h1>
-
-                    <div id="series" className="row">
-                        {this.state.series.length > 0 &&
-                            this.state.series.map((serie) => this.renderSeries(serie))}
-                    </div>
-
-                    {!this.state.series.length &&
+                    <Row>
+                        {this.state.loadedSeries && this.state.series.length > 0 &&
+                            this.state.series.map(this.renderSeries)}
+                    </Row>
+                    {this.state.loadedSeries && !this.state.series.length &&
                         <div className="alert alert-primary">Nenhuma série cadastrada</div>}
                 </section>
-                <Modal show={this.state.modalShow} onHide={modalClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal title</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        <p>Modal body text goes here.</p>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={modalClose}>Close</Button>
-                        <Button variant="primary" onClick={modalClose}>Save changes</Button>
-                    </Modal.Footer>
-                </Modal>
             </>
         );
     }
