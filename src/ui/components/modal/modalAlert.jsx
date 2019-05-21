@@ -10,7 +10,7 @@ class ModalAlert extends Component {
     
     render() {
         return (
-            <Modal show={true} onHide={this.props.modalClose}>
+            <Modal show={this.props.modalShow} onHide={this.props.modalClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>{this.props.title}</Modal.Title>
                 </Modal.Header>

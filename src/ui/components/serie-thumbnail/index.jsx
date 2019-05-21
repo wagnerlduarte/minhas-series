@@ -76,14 +76,12 @@ class SerieThumbnail extends Component {
                     </div>
                 </div>
 
-                {
-                    this.state.modalShow &&
-                    <RootModal modalClose={this.modalClose}
-                        modalConfirm={() => { this.deleteSerie(this.state.idSerieToDelete) }}
-                        message={'Você deseja realmente excluir esse item?'}
-                        title={'Confirmação'}
-                        modalType={modalTypes.delete} />
-                }
+                <RootModal modalShow={this.state.modalShow}
+                    modalClose={this.modalClose}
+                    modalConfirm={() => { this.deleteSerie(this.state.idSerieToDelete) }}
+                    message={'Você deseja realmente excluir esse item?'}
+                    title={'Confirmação'}
+                    modalType={modalTypes.delete} />
             </>
         );
     }
