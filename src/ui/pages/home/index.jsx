@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Tab, Row, Col, ListGroup } from 'react-bootstrap'
 
 
-import api from './Api';
-import SerieThumbnail from './SerieThumbnail';
+import { Api as api } from '../../../services';
+import { SerieThumbnail } from '../../';
 
 class Home extends Component {
 

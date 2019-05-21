@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Row } from 'react-bootstrap'
 
-import api from './Api';
+import { Api as api } from '../../../services';
 
-import SerieThumbnail from './SerieThumbnail';
+import { SerieThumbnail } from '../../';
 
 class Series extends Component {
 

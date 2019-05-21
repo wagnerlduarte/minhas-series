@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
+import { RootModal, modalTypes } from '../modal';
+
 import { Link } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap'
 import { toast } from 'react-toastify';
 
-import api from './Api';
+import { Api as api } from '../../../services';
 
 const statuses = {
     watched: 'Assistido',
@@ -28,6 +29,8 @@ class SerieThumbnail extends Component {
                 draggable: true
             }
         }
+
+        this.modalClose = this.modalClose.bind(this)
     }
 
     modalClose() {
@@ -73,20 +76,14 @@ class SerieThumbnail extends Component {
                     </div>
                 </div>
 
-                <Modal show={this.state.modalShow} onHide={this.modalClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal title</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        <p>Modal body text goes here.</p>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.modalClose()}>Close</Button>
-                        <Button variant="primary" onClick={() => { this.deleteSerie(this.state.idSerieToDelete) }}>Save changes</Button>
-                    </Modal.Footer>
-                </Modal>
+                {
+                    this.state.modalShow &&
+                    <RootModal modalClose={this.modalClose}
+                        modalConfirm={() => { this.deleteSerie(this.state.idSerieToDelete) }}
+                        message={'Você deseja realmente excluir esse item?'}
+                        title={'Confirmação'}
+                        modalType={modalTypes.delete} />
+                }
             </>
         );
     }

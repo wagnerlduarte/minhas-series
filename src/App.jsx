@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { Route, Link, Switch, Redirect, withRouter } from 'react-router-dom';
-import Interceptor from './Interceptor';
-import auth from './auth'
 
-import { Loader } from './loader/loader.component';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Home from './Home';
-import Serie from './Serie';
-import About from './About';
-import Series from './Series';
-import Login from "./login/Login";
+import {
+    Home,
+    Serie,
+    About,
+    Series,
+    Login,
+    Loader
+} from './ui';
+
+import { Interceptor, Auth } from './services'
 
 const PrivateRoute = ({ component: Component, render: render, ...rest }) => {
-    if (render && auth.isAuthenticated()) {
+    if (render && Auth.isAuthenticated()) {
         return (
             <Route
                 {...rest}
@@ -26,7 +28,7 @@ const PrivateRoute = ({ component: Component, render: render, ...rest }) => {
             <Route
                 {...rest}
                 render={props => (
-                    auth.isAuthenticated() ? (
+                    Auth.isAuthenticated() ? (
                         <Component {...props} />
                     ) : (
                             <Redirect to={{ pathname: '/', state: { from: props.location } }} />
@@ -53,11 +55,11 @@ class App extends Component {
     }
 
     componentDidUpdate() {
-        const isAuthenticated = auth.isAuthenticated();
+        const isAuthenticated = Auth.isAuthenticated();
 
         if (isAuthenticated !== this.state.showHeader) {
             this.setState({
-                showHeader: auth.isAuthenticated()
+                showHeader: Auth.isAuthenticated()
             })
         }
 
@@ -70,7 +72,7 @@ class App extends Component {
     }
 
     logout() {
-        auth.logout()
+        Auth.logout()
         this.props.history.push('/')
     }
 
@@ -108,7 +110,7 @@ class App extends Component {
                 <section className="container">
                     <Switch>
                         <Route path="/" exact render={(props) => {
-                            if (!auth.isAuthenticated()) {
+                            if (!Auth.isAuthenticated()) {
                                 return <Login {...props} />
                             } else {
                                 return <Redirect to={'/home'} />
