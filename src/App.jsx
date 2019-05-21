@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter, NavLink } from 'react-router-dom';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -89,13 +89,13 @@ class App extends Component {
                             </a>
                             <ul className="nav navbar-nav mr-auto">
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/">Home</Link>
+                                    <NavLink activeClassName="active" className="nav-link" to="/home">Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/serie">Nova Série</Link>
+                                    <NavLink activeClassName="active" className="nav-link" to="/serie">Nova Série</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/about">Sobre</Link>
+                                    <NavLink activeClassName="active" className="nav-link" to="/about">Sobre</NavLink>
                                 </li>
                             </ul>
                             <ul className="nav navbar-nav">
