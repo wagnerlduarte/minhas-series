@@ -5,7 +5,8 @@
       "name": "How I met your mother 2",
       "status": "watched",
       "genre": "Comédia",
-      "comments": "Muito bom"
+      "comments": "Muito bom",
+      "rate": 5
     },
     {
       "id": 2,
@@ -16,14 +17,16 @@
         "episode": "01",
         "season": "09"
       },
-      "comments": "Bom para descontrair"
+      "comments": "Bom para descontrair",
+      "rate": 2.5
     },
     {
       "name": "Teste",
       "status": "watched",
       "genre": "Comédia",
       "comments": "Teste",
-      "id": 5
+      "id": 5,
+      "rate": 3.5
     },
     {
       "name": "Velozes e Furiosos",
