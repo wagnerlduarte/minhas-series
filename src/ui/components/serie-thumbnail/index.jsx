@@ -53,7 +53,6 @@ class SerieThumbnail extends Component {
     }
 
     changeRate(rate){
-
         api.loadSeries(this.state.serie.id).then((response) => {
             let serie = response.data;
             serie.rate = rate;

@@ -8,7 +8,8 @@ const apis = {
     loadSeries: (id) => axios.get(`series/${id}`),
     deleteSeries: (id) => axios.delete(`series/${id}`),
     saveSeries: (newSerie) => axios.post('series', newSerie),
-    editSeries: (editedSerie) => axios.put(`series/${editedSerie.id}`, editedSerie)
+    editSeries: (editedSerie) => axios.put(`series/${editedSerie.id}`, editedSerie),
+    getUnratedSeries: () => axios.get('series?rate=0')
 }
 
 export default apis;

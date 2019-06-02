@@ -6,7 +6,7 @@
       "status": "watched",
       "genre": "Comédia",
       "comments": "Muito bom",
-      "rate": 5
+      "rate": 2.5
     },
     {
       "id": 2,
@@ -18,7 +18,7 @@
         "season": "09"
       },
       "comments": "Bom para descontrair",
-      "rate": 2.5
+      "rate": 1.5
     },
     {
       "name": "Teste",
@@ -26,21 +26,23 @@
       "genre": "Comédia",
       "comments": "Teste",
       "id": 5,
-      "rate": 3.5
+      "rate": 1
     },
     {
       "name": "Velozes e Furiosos",
       "status": "watching",
       "genre": "Ação",
       "comments": "Melhor filme do mundo",
-      "id": 6
+      "id": 6,
+      "rate": 0
     },
     {
       "id": 7,
       "name": "Star Wars 2",
       "status": "toWatch",
       "genre": "Ação",
-      "comments": "Uma bosta!"
+      "comments": "Uma bosta!",
+      "rate": 0
     }
   ],
   "genres": [

@@ -10,7 +10,8 @@ import {
     About,
     Series,
     Login,
-    Loader
+    Loader,
+    BellNotification
 } from './ui';
 
 import { Interceptor, Auth } from './services'
@@ -99,8 +100,9 @@ class App extends Component {
                                 </li>
                             </ul>
                             <ul className="nav navbar-nav">
+                                <BellNotification />
                                 <li className="nav-item">
-                                    <a className="nav-link" href="javascript:;" onClick={() => this.logout()}>Logout</a>
+                                    <a className="nav-link" href="javascript:;" onClick={() => this.logout()}>Logout <i class="fas fa-sign-out-alt"></i></a>
                                 </li>
                             </ul>
                         </div>
