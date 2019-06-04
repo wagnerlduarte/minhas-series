@@ -3,15 +3,20 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
 
+import { Provider } from 'react-redux';
+import { Store } from './store';
+
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
+    <Provider store={Store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>,
     document.getElementById('root')
 );
 
