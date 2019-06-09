@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Tab, Row, Col, ListGroup } from 'react-bootstrap'
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { clickButton } from '../../../actions';
 
 import { Api as api } from '../../../services';
 import { SerieThumbnail } from '../../';
@@ -75,23 +72,7 @@ class Home extends Component {
         })
     }
 
-    state = {
-        inputValue: ''
-    }
-    inputChange = event => {
-        this.setState({
-            inputValue: event.target.value
-        })
-    }
-
     render() {
-        const {
-            clickButton,
-            newValue
-        } = this.props;
-
-        const { inputValue } = this.state;
-
         return (
             <div>
                 <section id="intro" className="intro-section">
@@ -130,12 +111,6 @@ class Home extends Component {
                                 </Tab.Container>
                             }
 
-                            <input onChange={this.inputChange} value={inputValue} type='text' />
-                            <button onClick={() => clickButton(inputValue)}>
-                                Click me!
-                            </button>
-                            <h1>{newValue}</h1>
-
                         </div>
                     }
                 </section>
@@ -144,12 +119,4 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = store => ({
-    newValue: store.clickState.newValue
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ clickButton }, dispatch);
-
-// export default Home;
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

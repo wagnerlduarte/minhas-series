@@ -1,7 +1,9 @@
 import { clickReducer } from './clickReducer';
-// import { OtherReducer } from './otherReducer';
+import { loadNotificationsReducer } from './loadNotificationsReducer';
+
 import { combineReducers } from 'redux';
+
 export const Reducers = combineReducers({
     clickState: clickReducer,
-    // otherState: otherReducer
+    loadNotifications: loadNotificationsReducer
 });

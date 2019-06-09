@@ -4,9 +4,11 @@ import { RootModal, modalTypes } from '../modal';
 
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Api as api } from '../../../services';
 import Rating from 'react-rating';
 
-import { Api as api } from '../../../services';
+import { connect } from 'react-redux';
+import { loadNotifications } from '../../../actions';
 
 const statuses = {
     watched: 'Assistido',
@@ -29,7 +31,7 @@ class SerieThumbnail extends Component {
                 pauseOnHover: true,
                 draggable: true
             },
-            serie: {...this.props.serie}
+            serie: { ...this.props.serie }
         }
 
         this.modalClose = this.modalClose.bind(this)
@@ -52,16 +54,18 @@ class SerieThumbnail extends Component {
         })
     }
 
-    changeRate(rate){
+    changeRate(rate) {
         api.loadSeries(this.state.serie.id).then((response) => {
             let serie = response.data;
             serie.rate = rate;
             api.editSeries(serie).then(() => {
                 this.setState({
-                    serie: {...this.state.serie,
+                    serie: {
+                        ...this.state.serie,
                         rate: rate
                     }
                 })
+                this.props.loadNotifications();
                 toast.success('Avaliação salva com sucesso!', this.state.toastOptions)
             })
         })
@@ -113,4 +117,8 @@ class SerieThumbnail extends Component {
     }
 }
 
-export default SerieThumbnail;
+const mapDispatchToProps = dispatch => ({
+    loadNotifications: () => dispatch(loadNotifications())
+});
+
+export default connect(null, mapDispatchToProps)(SerieThumbnail);

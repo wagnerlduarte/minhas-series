@@ -102,7 +102,7 @@ class App extends Component {
                             <ul className="nav navbar-nav">
                                 <BellNotification />
                                 <li className="nav-item">
-                                    <a className="nav-link" href="javascript:;" onClick={() => this.logout()}>Logout <i class="fas fa-sign-out-alt"></i></a>
+                                    <a className="nav-link" href="javascript:;" onClick={() => this.logout()}>Logout <i className="fas fa-sign-out-alt"></i></a>
                                 </li>
                             </ul>
                         </div>
