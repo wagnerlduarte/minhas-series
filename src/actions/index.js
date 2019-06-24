@@ -1,5 +1,10 @@
-import { CLICK_UPDATE_VALUE, LOAD_NOTIFICATIONS } from './actionTypes';
+import { CLICK_UPDATE_VALUE, LOAD_NOTIFICATIONS, LOADER } from './actionTypes';
 import { Api as api } from '../services';
+
+export const loader = value => ({
+    type: LOADER,
+    loading: value
+});
 
 export const clickButton = value => ({
     type: CLICK_UPDATE_VALUE,
@@ -14,7 +19,7 @@ export const loadNotifications = () => {
     }
 };
 
-export const setNotifications = value => ({
+const setNotifications = value => ({
     type: LOAD_NOTIFICATIONS,
     notifications: value
 });

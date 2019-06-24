@@ -2,13 +2,23 @@ import React from 'react'
 
 import './loader.css'
 
-export const Loader = props => (
-  <div className="loader loader-double is-active" />
-)
+import { connect } from 'react-redux';
+import { loader } from '../../../actions';
 
-export const SmallLoader = props => (
-  <div
-    style={{ width: props.width, height: props.height }}
-    className="small-loader"
-  />
-)
+const Loader = (props) => {
+  return (
+    props.loading &&
+    <div className="loader loader-double is-active" />
+  )
+}
+
+const mapDispatchToProps = dispatch => ({
+  loader: (value) => dispatch(loader(value))
+});
+
+const mapStateToProps = store => ({
+  loading: store.loader.loading
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Loader);
+

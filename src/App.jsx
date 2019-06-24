@@ -50,9 +50,13 @@ class App extends Component {
             showHeader: false
         }
 
-        this.interceptor = new Interceptor()
-        this.changeLoadingState = this.changeLoadingState.bind(this)
         this.logout = this.logout.bind(this)
+    }
+
+    componentDidMount(){
+        this.setState({
+            showHeader: Auth.isAuthenticated()
+        })
     }
 
     componentDidUpdate() {
@@ -60,16 +64,10 @@ class App extends Component {
 
         if (isAuthenticated !== this.state.showHeader) {
             this.setState({
-                showHeader: Auth.isAuthenticated()
+                showHeader: isAuthenticated
             })
         }
 
-    }
-
-    changeLoadingState(status) {
-        this.setState({
-            loading: status
-        })
     }
 
     logout() {
@@ -78,10 +76,9 @@ class App extends Component {
     }
 
     render() {
-        this.interceptor.setup(this.changeLoadingState);
-
         return (
             <div>
+
                 {this.state.showHeader &&
                     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
                         <div className="collapse navbar-collapse">
@@ -109,6 +106,8 @@ class App extends Component {
                     </nav>
                 }
 
+                <Interceptor />
+
                 <section className="container">
                     <Switch>
                         <Route path="/" exact render={(props) => {
@@ -127,9 +126,8 @@ class App extends Component {
                         <Redirect to="/" />
                     </Switch>
                 </section>
-                {this.state.loading &&
-                    <Loader />
-                }
+
+                <Loader />
 
                 <ToastContainer
                     position="top-right"

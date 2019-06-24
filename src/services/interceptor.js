@@ -1,32 +1,64 @@
+import React from 'react';
+
 import axios from 'axios';
 
-export default class Interceptor {
+import { connect } from 'react-redux';
+import { loader } from '../actions';
+import { bindActionCreators } from 'redux';
 
-    setup(changeLoadingState) {
 
+class Interceptor extends React.PureComponent {
+
+    constructor(props) {
+        super(props)
+
+        this.setup = this.setup.bind(this)
+
+        this.setup();
+    }
+
+    setup() {
         let count = 0;
 
         // Add a request interceptor
-        axios.interceptors.request.use(function (config) {
+        axios.interceptors.request.use((config) => {
             // Do something before request is sent
-            changeLoadingState(true);
+            this.props.loader(true);
             count++;
             return config;
         })
 
         // Add a response interceptor
-        axios.interceptors.response.use(function (response) {
+        axios.interceptors.response.use((response) => {
             // Do something with response data
             if ((--count) === 0)
-                changeLoadingState(false);
+                this.props.loader(false);
+
 
             return response;
-        }, function (error) {
+        }, (error) => {
             // Do something with response error
             if (!(--count))
-                changeLoadingState(false);
+                this.props.loader(false);
 
             return Promise.reject(error);
         })
     }
+
+    render() {
+        return null;
+    }
 }
+
+// const mapDispatchToProps = dispatch => ({
+//     loader: (value) => dispatch(loader(value))
+// });
+
+const mapDispatchToProps = dispath =>
+    bindActionCreators(
+        {
+            loader
+        }, dispath
+    )
+
+export default connect(null, mapDispatchToProps)(Interceptor);
