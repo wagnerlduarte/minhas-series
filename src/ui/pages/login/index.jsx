@@ -26,8 +26,9 @@ export default class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        auth.login()
-        this.props.history.push('/')
+        auth.login(this.state).then(() => {
+            this.props.history.push('/')
+        })
     }
 
     render() {
