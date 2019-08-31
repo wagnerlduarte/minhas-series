@@ -10,6 +10,7 @@ import {
     About,
     Series,
     Login,
+    ConnectProvider,
     Loader,
     BellNotification
 } from './ui';
@@ -123,6 +124,7 @@ class App extends Component {
                         <PrivateRoute path="/serie/:id" render={(props) => <Serie key={props.match.params.id} {...props} />} exact />
                         <PrivateRoute path="/series/:genre" component={Series} exact />
                         <PrivateRoute path="/about" component={About} exact />
+                        <Route exact path="/connect/:provider" component={ConnectProvider} />
                         <Redirect to="/" />
                     </Switch>
                 </section>

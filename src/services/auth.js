@@ -14,6 +14,17 @@ const login = (user) => {
     });
 }
 
+const callbackProvider = (provider, search) => {
+    return Api.callbackProvider(provider, search)
+        .then(response => {
+            setToken(response.data.jwt, true);
+            setUserInfo(response.data.user, true);
+            return
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_INFO);
@@ -67,6 +78,6 @@ const getUserInfo = (userInfo = USER_INFO) => {
 const isAuthenticated = () => Boolean(getToken());
 
 export default {
-    login, logout, isAuthenticated
+    login, logout, isAuthenticated, callbackProvider
 }
 

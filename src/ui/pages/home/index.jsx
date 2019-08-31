@@ -64,7 +64,7 @@ class Home extends Component {
         api.loadSeriesByGenre(genre, limitResult).then((response) => {
             const series = this.state.series;
 
-            series[genre] = response.data;
+            series[genre] = response.data.docs;
 
             this.setState({
                 series: series

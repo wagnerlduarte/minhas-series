@@ -14,7 +14,7 @@ export const clickButton = value => ({
 export const loadNotifications = () => {
     return (dispatch) => {
         return api.getUnratedSeries().then((response) => {
-            dispatch(setNotifications(response.data));
+            dispatch(setNotifications(response.data.docs));
         })
     }
 };

@@ -2,7 +2,11 @@ import React, { Component } from "react"
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap"
 import "./Login.css"
 
+import FormDivider from '../../components/form-divider'
+import SocialLink from '../../components/social-link'
+
 import { Auth as auth } from '../../../services'
+import Facebook from "../../components/facebook-login";
 
 export default class Login extends Component {
     constructor(props) {
@@ -32,8 +36,18 @@ export default class Login extends Component {
     }
 
     render() {
+        const providers = ['facebook', 'github', 'google', 'twitter']; // To remove a provider from the list just delete it from this array...
         return (
             <div className="Login">
+                <div className="row">
+                    <div className="col-md-12">
+                        {providers.map(provider => (
+                            <SocialLink provider={provider} key={provider} />
+                        ))}
+                        {/* <Facebook /> */}
+                    </div>
+                </div>
+                <FormDivider />
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" size="large">
                         <FormLabel>Email</FormLabel>

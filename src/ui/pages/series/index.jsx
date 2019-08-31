@@ -34,7 +34,7 @@ class Series extends Component {
             setTimeout(() => {
                 api.loadSeriesByGenre(this.props.match.params.genre).then((response) => {
                     this.setState({
-                        series: response.data,
+                        series: response.data.docs,
                         loadedSeries: true
                     })
                     resolve()
