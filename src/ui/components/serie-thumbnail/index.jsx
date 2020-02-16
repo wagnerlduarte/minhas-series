@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 
 import { RootModal, modalTypes } from '../modal';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Api as api } from '../../../services';
 import Rating from 'react-rating';
 
 import { connect } from 'react-redux';
 import { loadNotifications } from '../../../actions';
+
+import './style.css'
 
 const statuses = {
     watched: 'Assistido',
@@ -90,15 +92,15 @@ class SerieThumbnail extends Component {
                                 {this.state.serie.name}
                             </h4>
                             <div className="row">
-                                <div className="col-xs-12 col-md-6">
+                                <div className="col-xs-12 col-md-5">
                                     <p className="lead">
                                         {statuses[this.state.serie.status]}
                                     </p>
                                 </div>
                                 {this.props.showButtons &&
-                                    <div className="col-xs-12 col-md-6">
-                                        <Link className="btn btn-success" to={`/serie/${this.state.serie.id}`}>Editar</Link>
-                                        <button type="button" className="btn btn-success" onClick={() => this.modalOpen(this.state.serie.id)}>Excluir</button>
+                                    <div className="col-xs-12 col-md-7">
+                                        <button type="button" className="btn btn-primary" onClick={() => this.props.history.push(`/serie/${this.state.serie.id}`)}>Editar</button>
+                                        <button type="button" style={{ marginLeft: '.5em' }} className="btn btn-danger" onClick={() => this.modalOpen(this.state.serie.id)}>Excluir</button>
                                     </div>
                                 }
                             </div>
@@ -121,4 +123,4 @@ const mapDispatchToProps = dispatch => ({
     loadNotifications: () => dispatch(loadNotifications())
 });
 
-export default connect(null, mapDispatchToProps)(SerieThumbnail);
+export default connect(null, mapDispatchToProps)(withRouter(SerieThumbnail));

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 
+import { connect } from 'react-redux';
+import { loadNotifications } from '../../../actions';
+
 import { Api as api } from '../../../services';
 
 const statuses = {
@@ -70,6 +73,7 @@ class Serie extends Component {
         } else {
             api.saveSeries(serie)
                 .then(() => {
+                    this.props.loadNotifications();
                     this.setState({
                         redirect: `/series/${refs.genre.value}`
                     })
@@ -106,11 +110,16 @@ class Serie extends Component {
                         <label>Comentários:</label>
                         <textarea ref="comments" className="form-control" ></textarea>
                     </div>
-                    <button type="button" className="btn btn-default" onClick={() => this.saveSeries()}>Salvar</button>
+                    <button type="button" className="btn btn-success" onClick={() => this.saveSeries()}>Salvar</button>
                 </form>
             </section >
         );
     }
 }
 
-export default Serie;
+const mapDispatchToProps = dispatch => ({
+    loadNotifications: () => dispatch(loadNotifications())
+});
+
+export default connect(null, mapDispatchToProps)(Serie);
+// export default Serie;

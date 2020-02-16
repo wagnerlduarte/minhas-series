@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const baseURL = 'http://localhost:3001/';
-const baseURL = '';//'http://192.168.99.100:3001/';
+const baseURL = 'http://localhost:3001/';
+// const baseURL = '';//'http://192.168.99.100:3001/';
 const strapiURL = 'http://localhost:1337/';
 
 const genres = ['Comédia', 'Drama', 'Ação'];

@@ -68,7 +68,8 @@ const get = (key) => {
 }
 
 const getToken = (tokenKey = TOKEN_KEY) => {
-    return get(tokenKey);
+    return true;
+    // return get(tokenKey);
 }
 
 const getUserInfo = (userInfo = USER_INFO) => {

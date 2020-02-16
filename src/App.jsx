@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Route, Switch, Redirect, withRouter, NavLink } from 'react-router-dom';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import {
+    Navbar,
+    Nav
+} from 'react-bootstrap';
 
 import {
     Home,
@@ -54,7 +59,7 @@ class App extends Component {
         this.logout = this.logout.bind(this)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
             showHeader: Auth.isAuthenticated()
         })
@@ -77,34 +82,30 @@ class App extends Component {
     }
 
     render() {
+
         return (
             <div>
 
                 {this.state.showHeader &&
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top" role="navigation">
-                        <div className="collapse navbar-collapse">
+                    <Navbar bg="light" expand="lg" className="fixed-top" role="navigation" style={{ minHeight: '56px' }}>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="basic-navbar-nav">
                             <a className="navbar-brand">
                                 <img src="/images/logo.png" alt="logo" height="30" />
                             </a>
-                            <ul className="nav navbar-nav mr-auto">
-                                <li className="nav-item">
-                                    <NavLink activeClassName="active" className="nav-link" to="/home">Home</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink activeClassName="active" className="nav-link" to="/serie">Nova Série</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink activeClassName="active" className="nav-link" to="/about">Sobre</NavLink>
-                                </li>
-                            </ul>
+                            <Nav className="mr-auto" >
+                                <Nav.Link activeClassName="active" className="nav-link" href="/home">Home</Nav.Link>
+                                <Nav.Link activeClassName="active" className="nav-link" href="/serie">Nova Série</Nav.Link>
+                                <Nav.Link activeClassName="active" className="nav-link" href="/about">Sobre</Nav.Link>
+                            </Nav>
                             <ul className="nav navbar-nav">
                                 <BellNotification />
-                                <li className="nav-item">
-                                    <a className="nav-link" href="javascript:;" onClick={() => this.logout()}>Logout <i className="fas fa-sign-out-alt"></i></a>
-                                </li>
+
+                                <Nav.Link className="nav-link" href="javascript:;" onClick={() => this.logout()}>Logout <i className="fas fa-sign-out-alt"></i></Nav.Link>
+
                             </ul>
-                        </div>
-                    </nav>
+                        </Navbar.Collapse>
+                    </Navbar>
                 }
 
                 <Interceptor />

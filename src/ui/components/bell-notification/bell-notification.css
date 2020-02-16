@@ -3,6 +3,8 @@
     background-color: #fff;
     min-height: 360px;
     max-height: 360px;
+    right: 0;
+    left: initial;
 }
 
 .navbar .dropdown.notify-drop .dropdown-menu .notify-drop-title {
