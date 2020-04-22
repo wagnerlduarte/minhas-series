@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Row } from 'react-bootstrap'
 
-import { Api as api } from '../../../services';
+import { Api as api } from '../../../services'
 
-import { SerieThumbnail } from '../../';
+import { SerieThumbnail } from '../../'
 
 class Series extends Component {
-
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             series: [],
-            loadedSeries: false
+            loadedSeries: false,
         }
 
         this.loadData = this.loadData.bind(this)
@@ -21,7 +20,12 @@ class Series extends Component {
 
     renderSeries(serie) {
         return (
-            <SerieThumbnail key={serie.id} serie={serie} showButtons={true} loadData={this.loadData} />
+            <SerieThumbnail
+                key={serie.id}
+                serie={serie}
+                showButtons={true}
+                loadData={this.loadData}
+            />
         )
     }
 
@@ -30,18 +34,14 @@ class Series extends Component {
     }
 
     loadData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                api.loadSeriesByGenre(this.props.match.params.genre).then((response) => {
-                    this.setState({
-                        series: response.data.docs,
-                        loadedSeries: true
-                    })
-                    resolve()
+        api.loadSeriesByGenre(this.props.match.params.genre).then(
+            (response) => {
+                this.setState({
+                    series: response.data.docs,
+                    loadedSeries: true,
                 })
-
-            }, 1500)
-        })
+            }
+        )
     }
 
     render() {
@@ -50,15 +50,19 @@ class Series extends Component {
                 <section id="intro" className="intro-section">
                     <h1>Series {this.props.match.params.genre}</h1>
                     <Row>
-                        {this.state.loadedSeries && this.state.series.length > 0 &&
+                        {this.state.loadedSeries &&
+                            this.state.series.length > 0 &&
                             this.state.series.map(this.renderSeries)}
                     </Row>
-                    {this.state.loadedSeries && !this.state.series.length &&
-                        <div className="alert alert-primary">Nenhuma série cadastrada</div>}
+                    {this.state.loadedSeries && !this.state.series.length && (
+                        <div className="alert alert-primary">
+                            Nenhuma série cadastrada
+                        </div>
+                    )}
                 </section>
             </>
-        );
+        )
     }
 }
 
-export default Series;
+export default Series
